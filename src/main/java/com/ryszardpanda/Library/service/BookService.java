@@ -1,5 +1,6 @@
 package com.ryszardpanda.Library.service;
 
+import com.ryszardpanda.Library.model.BookStats;
 import com.ryszardpanda.Library.repository.BookRepository;
 import com.ryszardpanda.Library.exceptions.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -36,5 +37,26 @@ public class BookService {
             throw new ResourceNotFoundException("Nie znaleziono książki o takim ID", HttpStatus.NOT_FOUND);
         }
         return bookRepository.deleteBookById(id);
+    }
+
+    public List<Book> searchBooksByTitle(String title){
+        return bookRepository.searchBooksByTitle(title);
+    }
+
+    public List<Book> searchBookByAuthorAndYear(String author, Integer year){
+        return bookRepository.searchBooksByAuthorAndYear(author, year);
+    }
+
+    public Book updateRating(Integer id, Book updatedRating){
+        return bookRepository.updateRating(id, updatedRating)
+                .orElseThrow(() -> new ResourceNotFoundException("Nie znaleziono książki o takim ID", HttpStatus.NOT_FOUND));
+    }
+
+    public List<Book> getTopRanking(Integer limit){
+        return bookRepository.getTopRanking(limit);
+    }
+
+    public BookStats getBookStats(){
+        return bookRepository.getBookStats();
     }
 }

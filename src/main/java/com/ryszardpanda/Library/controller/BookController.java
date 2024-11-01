@@ -1,5 +1,6 @@
 package com.ryszardpanda.Library.controller;
 
+import com.ryszardpanda.Library.model.BookStats;
 import com.ryszardpanda.Library.repository.BookRepository;
 import com.ryszardpanda.Library.service.BookService;
 import lombok.RequiredArgsConstructor;
@@ -40,4 +41,30 @@ public class BookController {
     public void deleteBookById(@PathVariable Integer id){
         boolean deletedBook = bookService.deleteBookById(id);
     }
+
+    @GetMapping("/books/search")
+    public List<Book> searchBooksByTitle(@RequestParam String title) {
+        return bookService.searchBooksByTitle(title);
+    }
+
+    @GetMapping("/books/searchByAuthor")
+    public List<Book> searchBookByAuthorAndYear(@RequestParam (required = false) String author, @RequestParam (required = false) Integer year) {
+        return bookService.searchBookByAuthorAndYear(author, year);
+    }
+
+    @PutMapping("books/updateRating")
+    public Book updateRating(@RequestParam Integer id, @RequestBody Book rating){
+        return bookService.updateRating(id, rating);
+    }
+
+    @GetMapping("books/getTopRanking")
+    public List<Book> getTopRanking(@RequestParam Integer limit){
+        return bookService.getTopRanking(limit);
+    }
+
+    @GetMapping("books/stats")
+    public BookStats getBookStats(){
+        return bookService.getBookStats();
+    }
+
 }
