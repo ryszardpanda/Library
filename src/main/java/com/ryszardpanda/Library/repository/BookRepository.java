@@ -15,7 +15,11 @@ public class BookRepository {
     private final List<Book> books;
 
     public Book addBook(Book book) {
-        book.setId(books.size() + 1);
+        Integer maxId = books.stream().max(Comparator.comparing(Book::getId))
+                .map(Book::getId)
+                .orElse(0);
+
+        book.setId(maxId + 1);
         books.add(book);
         return book;
     }
@@ -54,8 +58,9 @@ public class BookRepository {
                 .collect(Collectors.toList());
     }
 
-    public List<Book> searchBooksByAuthorAndYear(String author, Integer year) {
+    public List<Book> searchBooksByAuthorOrYear(String author, Integer year) {
         return books.stream()
+                .filter(book -> book.getBookAuthor() != null && book.getPublishYear() != null)
                 .filter(book -> (author == null || book.getBookAuthor().contains(author)))
                 .filter(book -> (year == null || book.getPublishYear().equals(year)))
                 .collect(Collectors.toList());

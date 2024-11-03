@@ -44,7 +44,7 @@ public class BookService {
     }
 
     public List<Book> searchBookByAuthorAndYear(String author, Integer year){
-        return bookRepository.searchBooksByAuthorAndYear(author, year);
+        return bookRepository.searchBooksByAuthorOrYear(author, year);
     }
 
     public Book updateRating(Integer id, Book updatedRating){
