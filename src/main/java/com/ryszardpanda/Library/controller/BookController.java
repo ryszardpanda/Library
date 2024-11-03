@@ -52,7 +52,7 @@ public class BookController {
         return bookService.searchBookByAuthorAndYear(author, year);
     }
 
-    @PutMapping("books/updateRating")
+    @PatchMapping("books/updateRating")
     public Book updateRating(@RequestParam Integer id, @RequestBody Book rating){
         return bookService.updateRating(id, rating);
     }
@@ -66,5 +66,4 @@ public class BookController {
     public BookStats getBookStats(){
         return bookService.getBookStats();
     }
-
 }
